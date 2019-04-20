@@ -1,4 +1,52 @@
-﻿Namespace ExoQuantVB
+'ExoQuantVB(ExoQuant v0.7)
+'
+'Copyright(c) 2019 David Benepe
+'Copyright(c) 2004 Dennis Ranke
+'
+'Permission Is hereby granted, free Of charge, to any person obtaining a copy of
+'this software And associated documentation files (the "Software"), To deal In
+'the Software without restriction, including without limitation the rights To
+'use, copy, modify, merge, publish, distribute, sublicense, And/Or sell copies
+'of the Software, And to permit persons to whom the Software Is furnished to do
+'so, subject to the following conditions:
+'
+'The above copyright notice And this permission notice shall be included In all
+'copies Or substantial portions of the Software.
+'
+'THE SOFTWARE Is PROVIDED "AS IS", WITHOUT WARRANTY Of ANY KIND, EXPRESS Or
+'IMPLIED, INCLUDING BUT Not LIMITED To THE WARRANTIES Of MERCHANTABILITY,
+'FITNESS FOR A PARTICULAR PURPOSE And NONINFRINGEMENT. IN NO EVENT SHALL THE
+'AUTHORS Or COPYRIGHT HOLDERS BE LIABLE For ANY CLAIM, DAMAGES Or OTHER
+'LIABILITY, WHETHER In AN ACTION Of CONTRACT, TORT Or OTHERWISE, ARISING FROM,
+'OUT OF Or IN CONNECTION WITH THE SOFTWARE Or THE USE Or OTHER DEALINGS IN THE
+'SOFTWARE.
+
+'/******************************************************************************
+'* Usage:
+'* ------
+'*
+'* Dim exq As ExoQuantVB.ExoQuant = New ExoQuantVB.ExoQuant() // init quantizer (per image)
+'* exq.Feed(<byte array of rgba32 data>) // feed pixel data (32bpp)
+'* exq.Quantize(<num of colors>) // find palette
+'* exq.GetPalette(<output rgba32 palette>, <num of colors>) // get palette
+'* exq.MapImage(<num of pixels>, <byte array of rgba32 data>, <output index data>)
+'* Or:
+'* exq.MapImageOrdered(<width>, <height>, <byte array of rgba32 data>, <output index data>)
+'* // map image to palette
+'*
+'* Notes:
+'* ------
+'*
+'* All 32bpp data (input data And palette data) Is considered a byte stream
+'* of the format:
+'* R0 G0 B0 A0 R1 G1 B1 A1 ...
+'* If you want to use a different order, the easiest way to do this Is to
+'* change the SCALE_x constants in expquant.h, as those are the only differences
+'* between the channels.
+'*
+'******************************************************************************/
+
+Namespace ExoQuantVB
     Class ExoQuant
         Shared ReadOnly EXQ_HASH_BITS As Integer = 16
         Shared ReadOnly EXQ_HASH_SIZE As Integer = (1 << EXQ_HASH_BITS)
