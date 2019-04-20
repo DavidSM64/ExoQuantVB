@@ -10,7 +10,7 @@ ExoQuant is a high-quality, easy to use color quantization library. This is for 
 * Dithering of the reduced image with very little noise
 
 Other versions:\
-C# - https://github.com/DavidSM64/ExoQuantSharp
+C# - https://github.com/DavidSM64/ExoQuantSharp \
 Javascript - https://github.com/DavidSM64/ExoQuantJS
 
 ## Usage:
