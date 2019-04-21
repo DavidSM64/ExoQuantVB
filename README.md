@@ -11,7 +11,8 @@ ExoQuant is a high-quality, easy to use color quantization library. This is for 
 
 Other versions:\
 C# - https://github.com/DavidSM64/ExoQuantSharp \
-Javascript - https://github.com/DavidSM64/ExoQuantJS
+Javascript - https://github.com/DavidSM64/ExoQuantJS \
+Python - https://github.com/DavidSM64/ExoQuantPY
 
 ## Usage:
 
