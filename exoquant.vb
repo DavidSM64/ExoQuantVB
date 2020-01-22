@@ -113,12 +113,29 @@ Namespace ExoQuantVB
             pExq.transparency = False
         End Sub
 
+        Private Function SafeLShift(ByVal value As UInteger, ByVal amount As UInteger) As UInteger
+            Return BitConverter.ToUInt32(BitConverter.GetBytes(value << amount), 0)
+        End Function
+        Private Function SafeRShift(ByVal value As UInteger, ByVal amount As UInteger) As UInteger
+            Return BitConverter.ToUInt32(BitConverter.GetBytes(value >> amount), 0)
+        End Function
+
+        Private Function SafeMinusForUInteger(ByVal value As UInteger, ByVal amount As UInteger) As UInteger
+            If value >= amount Then
+                Return value - amount
+            Else
+                ' amount is larger than value, so to prevent arithmetic underflow I need to
+                ' simulate looping around by subtracting by the max UInteger value.
+                Return UInteger.MaxValue - (amount - value)
+            End If
+        End Function
+
         Private Function MakeHash(ByVal rgba As UInteger) As UInteger
-            rgba -= (rgba >> 13) Or (rgba << 19)
-            rgba -= (rgba >> 13) Or (rgba << 19)
-            rgba -= (rgba >> 13) Or (rgba << 19)
-            rgba -= (rgba >> 13) Or (rgba << 19)
-            rgba -= (rgba >> 13) Or (rgba << 19)
+            rgba = SafeMinusForUInteger(rgba, SafeRShift(rgba, 13) Or SafeLShift(rgba, 19))
+            rgba = SafeMinusForUInteger(rgba, SafeRShift(rgba, 13) Or SafeLShift(rgba, 19))
+            rgba = SafeMinusForUInteger(rgba, SafeRShift(rgba, 13) Or SafeLShift(rgba, 19))
+            rgba = SafeMinusForUInteger(rgba, SafeRShift(rgba, 13) Or SafeLShift(rgba, 19))
+            rgba = SafeMinusForUInteger(rgba, SafeRShift(rgba, 13) Or SafeLShift(rgba, 19))
             rgba = rgba And (EXQ_HASH_SIZE - 1)
             Return rgba
         End Function
